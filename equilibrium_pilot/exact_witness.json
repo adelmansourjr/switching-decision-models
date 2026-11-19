@@ -1,0 +1,41 @@
+{
+  "prior_integer_weights_over_1000": [
+    [
+      105,
+      295,
+      390,
+      10,
+      200
+    ],
+    [
+      295,
+      105,
+      10,
+      390,
+      200
+    ]
+  ],
+  "mean_thresholds_in_grid_units": [
+    1.8,
+    4.2
+  ],
+  "horizon": 8,
+  "discount": 0.97,
+  "low_coordination_reward": 0.46,
+  "mismatch_cost": 0.45,
+  "public_context_flip_probability": 0.15,
+  "root_action": [
+    1,
+    0
+  ],
+  "normalized_action_gaps": [
+    0.010997234332965162,
+    0.018100328536930194
+  ],
+  "exact_gap_fractions": [
+    "5073546564956746712137803/461347499866248320000000000",
+    "16701082634540906679913337/922694999732496640000000000"
+  ],
+  "minimax_regret_lower_bound": 0.006840901257411517,
+  "exact_lower_bound_fraction": "84733720431533790703057728139917630182910041578611/12386338764900637738636248083365053836325760000000000"
+}

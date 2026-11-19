@@ -1,0 +1,14 @@
+{
+  "selected_control": "depth8",
+  "hashes": {
+    "game.py": "54f39d9d22cb68f8154a8c29e0b6595012260722ccd3a8eb19a9d605028da894",
+    "run.py": "e3b79adc6a6bc15ac91ec3ab6fc8ba330968e4ba70593d1624e4451e5fc34fc5",
+    "PROTOCOL.md": "5f10db55cdf91b0ca94f439bd185bc331ed58c3f665cac2b97ad577dcab3693d",
+    "models.npz": "12c328ab8e446695599437517921487fd5291c5f0a649a95912dceb2bdbf048b",
+    "development.json": "6896444f822c0d09222834caaf26785a85c183fbed9508a2e72d808639bbba64",
+    "development_scores.npz": "6eb7fec929f1b8e97681f36fa1f7a4c5c0e3bc78e31a48ee9f8fc40fa43b1deb",
+    "fit_diagnostics.json": "dda79c22d5efcd4ca8109b4edc3a8179990479def8f033f77ebf4515f7f94162",
+    "audit_oracle.py": "e7aaa2e85d8251c5810c609bf8f0a6b286608b8ff17b9dfa17125fd6f87efc8b",
+    "exact_witness.py": "c9bd89892ffafefb5f5ecf68435c228c1e8945ef4015d1f62a0de16cc1498ab4"
+  }
+}

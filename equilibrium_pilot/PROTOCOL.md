@@ -1,0 +1,37 @@
+# Exact-benchmark coordination pilot
+
+Adel Mansour · 12 November 2026
+
+## Question and scope
+
+Can a small trained policy approximate an exact public-information optimum in a coordination game with private hysteretic responses? Does representing the full posterior over thresholds improve payoff over keeping only their posterior means? The first comparator is the capacity-matched posterior-mean network. The second is the strongest prespecified planning control on development. A practical payoff gate requires both simultaneous lower confidence endpoints to exceed 0.01. Also report the distance from the exact optimum. This is a new pilot with a local confirmation bank of parameter draws from the declared model class. The earlier relay archive is a separate experiment.
+
+## Game
+
+There are two actors, two actions and a finite known horizon. Public context g flips between zero and one with a known probability h each round. Both aligned action profiles are strict stage-game Nash equilibria, and the aligned profile equal to g pays more to both players. The focal agent earns 1 for that profile, S for the other aligned profile, and -c for a mismatch. S is in [.12,.60], c in [.04,.45], h in [.015,.30] and gamma in [.94,.99]. Scores are discounted payoff divided by the sum of discount weights. Thus payoff differences are in units of stage payoff, with one point equal to .01 units.
+
+The opponent tracks focal behavior on the integer grid 0,...,8. After focal action a, the public memory becomes floor((1-lambda)b+8lambda a+.5), with known lambda in {.25,.5,.75}. Five private (release, activation) threshold pairs are (1,3), (1,5), (2,4), (2,5) and (3,4). For context g=1, an opponent in mode 0 switches to 1 at or above activation. An opponent in mode 1 stays in mode 1 only while memory is strictly above release. In context zero both thresholds are reflected about the midpoint. The update uses the next observed public context. The focal agent observes its completed actions, b, y and g. Initial b and y are zero, with g chosen uniformly. The fixed threshold pair is sampled from a declared public categorical prior. Its realization is hidden throughout.
+
+The opponent is a specified myopic best responder with a switching charge, rather than an arbitrary optimizing learner. In context 1, a threshold pair (l,u) corresponds to payoff r=1-(l+u)/16 for (1,1), payoff s=(l+u)/16 for (0,0), zero mismatch payoffs, and switching charge (u-l)/16. In context zero swap r and s. All r,s are positive and the higher coordination payoff corresponds to g. The quantized public memory is the opponent's stated belief input. The finite prior and known transition class allow exact filtering from public play. No policy observes the realized pair, future context or oracle's future observations.
+
+Public context changes make this an equilibrium-tracking task. A stable limit in a stationary game requires a separate constant-context test. The known opponent family and observation model supply structural information. The experiment assesses how much of the planning can be compressed after that information is given.
+
+## Fit, development and test
+
+Generate 96 independently parameterized training environments, using horizons 12,16,20. Sample at most 600 reachable belief states per environment from the full exact tree. Query the exact optimal action-value difference for each. The full learner sees five posterior weights and nine public context features. The mean learner sees the two posterior threshold means and the same context features, padded with three zeros. Both are 18-64-64-1 tanh networks, trained by Adam for 6,000 batches of 256. There are five paired fit seeds. Both receive the same exact value labels, sampled states, training budgets and state filter. Four added features encode the one-step predicted mode for each action and next public context. The full model computes probabilities under its posterior. The mean model computes the mode at its mean thresholds. These features expose the known response geometry to the network. The primary architectural difference is the information retained by the value approximator and how it propagates it through the known switch. Count all exact teacher calls as training cost.
+
+Development uses 40 fresh environments with horizons 16 or 20. Candidate policy and training settings are fixed. Choose the strongest planning control from QMDP, depth 3, depth 5, depth 8, match-current and persistent-high. QMDP averages action values for a fully revealed private type and then updates this expectation at each real observation. It approximates future information as available. Depth controls use exact public beliefs and truncated planning. Persistent-high plays the current context. Match-current copies the opponent.
+
+Freeze game source, runner, protocol, fitted networks, diagnostics and development scores before sampling the 400-context confirmation bank seed from OS randomness. All roles use the same distributions apart from the declared training horizon distribution. Thus the test assesses new continuous payoff/prior draws under a known opponent class. It does not hold out any of the five threshold mechanisms or response laws. Priors are sampled from symmetric Dirichlet laws with concentration uniform on [.35,3]. Save each context.
+
+## Scoring and uncertainty
+
+Compute exact expected returns under the static private type and stochastic future contexts for each frozen policy. Integrate both possible initial contexts. The exact teacher shares all the focal policy's observations but has unlimited planning computation. It is a ceiling for this declared decision problem. No Monte Carlo episode noise is included. Shared environment parameters are paired across policies and fit seeds.
+
+Resample environment IDs and paired fit seeds independently in a 10,000-draw crossed bootstrap. Use 97.5% marginal two-sided intervals for the two primary contrasts, providing nominal simultaneous 95% coverage by Bonferroni. Report the mean payoff gap to the oracle, the worst environment-by-fit gap, and the fraction within .01 units. Repeated decisions within an environment do not count as independent environments. Five fit seeds restrict conclusions about training instability. A failure of either primary one-point lower-bound gate is retained.
+
+Replay must reproduce context bank, expected scores and analysis exactly on the same numerical platform. Independently enumerate short-horizon histories to audit the exact oracle. Report public filtering and teacher labels as available model structure. Claims about equilibrium optimality apply to the opponent's specified response law and information set.
+
+## Development history
+
+The first development pass used 14-48-48-1 networks, 3,000 batches and no explicit one-step switch features. Its full-posterior policy scored 0.76879, against an exact value of 0.77810 and depth-eight control value 0.77685. That diagnostic suggested approximating the known sharp response boundary with smooth hidden units was a source of error. A second development pass adds the explicit switch features, expands both networks equally and doubles both training budgets. The first pass and its fits are retained in development_v1. Confirmation is generated once after final selection.\n

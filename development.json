@@ -1,0 +1,80 @@
+{
+  "endpoints": {
+    "joint_high_change": {
+      "mean": 0.3321701418143111,
+      "interval": [
+        0.32629548270001346,
+        0.337969739848069
+      ]
+    },
+    "relay1_duty_change": {
+      "mean": 1.6479873021779667e-18,
+      "interval": [
+        -2.3418766925686897e-18,
+        5.637851296924623e-18
+      ]
+    },
+    "relay2_duty_change": {
+      "mean": 0.00065981171904923,
+      "interval": [
+        0.0005919233763628983,
+        0.0007300967226180464
+      ]
+    },
+    "reversal_fraction": {
+      "mean": 1.0,
+      "interval": [
+        1.0,
+        1.0
+      ]
+    },
+    "physics_mae": {
+      "mean": 0.008937900130998816,
+      "interval": [
+        0.007799318991224316,
+        0.010086325224623162
+      ]
+    },
+    "independent_mae": {
+      "mean": 0.16608507090715555,
+      "interval": [
+        0.16314774135000673,
+        0.1689848699240345
+      ]
+    },
+    "net_vs_margin": {
+      "mean": 0.0019694801841582724,
+      "interval": [
+        0.0006948991618826867,
+        0.0035124565763921954
+      ]
+    },
+    "net_vs_learned_value": {
+      "mean": 0.001265069381826714,
+      "interval": [
+        0.00045144939819743296,
+        0.0021284980724970235
+      ]
+    }
+  },
+  "net_gain_over_never_shifting": {
+    "targeted_physics": 0.014378179621839049,
+    "margin": 0.01240869943768078,
+    "learned_value": 0.013113110240012337,
+    "random_equal_budget": 0.01038122229144298,
+    "no_measurement": 0.009494347034674938,
+    "measure_everywhere": 0.010363062727402832
+  },
+  "families": {
+    "linear": {
+      "probe_fraction": 0.35,
+      "headroom": 0.0185455323314757,
+      "reversal_fraction": 1.0
+    },
+    "sinusoidal": {
+      "probe_fraction": 0.35,
+      "headroom": 0.020064868716624964,
+      "reversal_fraction": 1.0
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "queries_per_repeat": 144,
+  "repeat_count": 5,
+  "learned_median_seconds": 1.9105034476120232e-05,
+  "depth8_median_seconds": 0.0011405642362660728,
+  "depth8_to_learned_latency_ratio": 59.69966909464032,
+  "learned_parameters": 5441,
+  "interpretation": "Single-query CPU timing including feature computation, with a fresh lookahead cache per planning query. Exact filtering, model setup, training and teacher costs are excluded. Hardware timing is descriptive."
+}
